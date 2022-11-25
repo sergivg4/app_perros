@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class PerroController extends Controller
 {
+    // Recibe todos los datos de perros de la BBDD y muestra hasta 500,
+    // devuelve la información en formato json.
     public function getData() {
 
         $perro = Perro::paginate(500);
@@ -17,6 +19,8 @@ class PerroController extends Controller
         ]);
     }
 
+    // Añade la información recibida a la BBDD
+    // Guarda la imagen recibida
     public function addData(Request $request) {
 
         $this->validate($request, [
@@ -44,6 +48,7 @@ class PerroController extends Controller
         return response()->json($create);
     }
 
+    // Actualiza la información que llega a la BBDD
     public function editData(Request $request) {
 
         $perro = Perro::find($request->id);
@@ -54,6 +59,7 @@ class PerroController extends Controller
         $perro->save();
     }
 
+    // Elimina al perro de la BBDD según su ID
     public function removeData(Request $request) {
 
         $perro = Perro::find($request->id);
@@ -61,6 +67,7 @@ class PerroController extends Controller
         $perro->delete();
     }
 
+    // Crea una string aleatoria para usarlo en el nombre de las imágenes guardadas
     public function random_string(){
         $key = '';
         $keys = array_merge( range('a','z'), range(0,9) );
