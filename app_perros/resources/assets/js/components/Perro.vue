@@ -5,11 +5,13 @@
         <div class="row featurette" v-if="infoMode">
           <div class="col-md-7">
             <h2 class="featurette-heading">{{addData.raza}}</h2>
-            <p class="lead">{{addData.descripcion}}</p>
+            <br>
+            <p class="lead"><b>Tamaño:</b><br>{{addData.size}}</p>
+            <p class="lead"><b>Descripción:</b><br>{{addData.descripcion}}</p>
             <button class="btn btn-danger" v-on:click="cancelInfoPerro()">Volver</button>
           </div>
           <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" :src="'storage/'+addData.imagen" style="width: 500px;">
+            <img class="featurette-image img-fluid mx-auto" :src="'storage/'+addData.imagen" style="width: 300px;">
           </div>
         </div>
 
@@ -22,6 +24,7 @@
                     <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Raza</th>
+                        <th scope="col">Tamaño</th>
                         <th scope="col">Descripcion</th>
                     </tr>
                 </thead>
@@ -29,6 +32,7 @@
                     <tr v-for="models in model.data">
                     <th scope="row">{{models.id}}</th>
                         <td>{{models.raza}}</td>
+                        <td>{{models.size}}</td>
                         <td>{{models.descripcion.substr(0, 50)}}...</td>
                         <td>
                             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
@@ -56,6 +60,15 @@
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="raza" name="raza" v-model="addData.raza"/>
                 </div>
+
+                <div class="form-group">
+                    <select class="form-control" v-model="addData.size">
+                        <option disabled value="">Please select one</option>
+                        <option>Pequeño</option>
+                        <option>Mediano</option>
+                        <option>Grande</option>
+                    </select>
+                </div>
                 
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="descripcion" name="descripcion" v-model="addData.descripcion"/>
@@ -70,6 +83,8 @@
                     <img width="200" height="200" :src="imagen" alt="Foto del perro">
                 </figure>
 
+                <br>
+
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
@@ -82,10 +97,20 @@
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="raza" name="raza" v-model="addData.raza"/>
                 </div>
+
+                <div class="form-group">
+                    <select class="form-control" v-model="addData.size">
+                        <option>Pequeño</option>
+                        <option>Mediano</option>
+                        <option>Grande</option>
+                    </select>
+                </div>
                 
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="descripcion" name="descripcion" v-model="addData.descripcion"/>
                 </div>
+
+                <input type="hidden" name="imagen" v-model="addData.imagen">
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -107,7 +132,7 @@ import axios from 'axios'
             return {
                 model:{},
                 thumbnail: '',
-                addData: {'raza':'', 'descripcion':'', 'imagen':''},
+                addData: {'id':'', 'raza':'', 'size':'', 'descripcion':'', 'imagen':''},
                 editMode: false,
                 infoMode: false
             }
@@ -130,12 +155,13 @@ import axios from 'axios'
 
                 let formData = new FormData();
                 formData.append('raza',this.addData.raza);
+                formData.append('size',this.addData.size);
                 formData.append('descripcion',this.addData.descripcion);
                 formData.append('imagen',this.addData.imagen);
 
                 axios.post('api/perro/add', formData)
                     .then(function (response) {
-                        vm.addData={'raza':'','descripcion':'', 'imagen':''}
+                        vm.addData={'id':'', 'raza':'', 'size':'', 'descripcion':'', 'imagen':''}
                         //console.log('success');
                         console.log(response.data);
                     })
@@ -143,35 +169,44 @@ import axios from 'axios'
             },
             showEditForm(data){
                 this.editMode = true
+                this.addData.id = data.id;
                 this.addData.raza = data.raza;
+                this.addData.size = data.size;
                 this.addData.descripcion = data.descripcion;
                 this.addData.imagen = data.imagen;
                 //console.log(this.editMode);
             },
             cancelEditForm(){
                 this.editMode = false
+                this.addData.id = '';
                 this.addData.raza = '';
+                this.addData.size = '';
                 this.addData.descripcion = '';
-                this.addData.imagen = data.imagen;
                 //console.log(this.editMode);
             },
             showInfoPerro(data){
                 this.infoMode = true
+                this.addData.id = data.id;
                 this.addData.raza = data.raza;
+                this.addData.size = data.size;
                 this.addData.descripcion = data.descripcion;
                 this.addData.imagen = data.imagen;
                 //console.log(this.editMode);
             },
             cancelInfoPerro(){
                 this.infoMode = false
+                this.addData.id = '';
                 this.addData.raza = '';
+                this.addData.size = '';
                 this.addData.descripcion = '';
-                this.addData.imagen = data.imagen;
                 //console.log(this.editMode);
             },
             editPerro(data){
                 //console.log(data)
                 axios.post('api/perro/edit/', data)
+                    // .then(function (response) {
+                    //     console.log(response)
+                    // });
                 this.editMode = false
                 this.fetchDataPerro();
             },

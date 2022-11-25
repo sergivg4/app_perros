@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Perro extends Model
 {
     protected $fillable =[
-        'raza','descripcion','imagen'
+        'id','raza','size','descripcion','imagen'
     ];
     public $timestamps = false;
 }

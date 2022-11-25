@@ -21,6 +21,7 @@ class PerroController extends Controller
 
         $this->validate($request, [
            'raza'     => 'required',
+           'size'   => 'required',
            'descripcion'     => 'required',
            'imagen'    => 'required|mimes:jpeg,jpg,png|max:5000'
         ]);
@@ -35,6 +36,7 @@ class PerroController extends Controller
 
         $create = Perro::create([
             'raza' => $request->raza,
+            'size' => $request->size,
             'descripcion' => $request->descripcion,
             'imagen' => $temp_name
         ]);
@@ -46,7 +48,9 @@ class PerroController extends Controller
 
         $perro = Perro::find($request->id);
         $perro->raza = $request->raza;
+        $perro->size = $request->size;
         $perro->descripcion = $request->descripcion;
+        $perro->imagen = $request->imagen;
         $perro->save();
     }
 
