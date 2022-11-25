@@ -1,6 +1,6 @@
 <template>
 
-    <div class="container">
+    <div class="container" style="margin: auto;">
         
         <!-- Sección de información del perro seleccionado -->
         <div class="row featurette" v-if="infoMode">
@@ -9,7 +9,7 @@
             <br>
             <p class="lead"><b>Tamaño:</b><br>{{addData.size}}</p>
             <p class="lead"><b>Descripción:</b><br>{{addData.descripcion}}</p>
-            <button class="btn btn-danger" v-on:click="cancelInfoPerro()">Volver</button>
+            <button class="btn btn-danger" v-on:click="cancelInfoPerro()">Volver</button><br>
           </div>
           <div class="col-md-5">
             <img class="featurette-image img-fluid mx-auto" :src="'storage/'+addData.imagen" style="width: 300px;">
