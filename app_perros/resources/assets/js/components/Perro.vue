@@ -29,7 +29,7 @@
                     <tr v-for="models in model.data">
                     <th scope="row">{{models.id}}</th>
                         <td>{{models.raza}}</td>
-                        <td>{{models.descripcion}}</td>
+                        <td>{{models.descripcion.substr(0, 50)}}...</td>
                         <td>
                             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group mr-2" role="group" aria-label="First group">
