@@ -29,4 +29,5 @@ Importante, para que Laravel funcione correctamente en su versión 5.3, es neces
 - php artisan key:generate
 - php artisan migrate
 - php artisan db:seed
+- php artisan storage:link
 - php artisan serve
