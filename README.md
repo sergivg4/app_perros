@@ -18,14 +18,14 @@ Importante, para que Laravel funcione correctamente en su versión 5.3, es neces
 
 ## Instalación
 
+- npm i
+- npm run prod
+- composer install
 - Renombrar .env.example -> .env
 - Crear BBDD y cambiar los siguientes parámetros en .env
 	- DB_DATABASE= "nombre de la base de datos que se va a utilizar"
 	- DB_USERNAME= "usuario de la base de datos"
 	- DB_PASSWORD= "contraseña del usuario (si tene, sinó dejar en blanco)"
-- npm i
-- npm run prod
-- composer install
 - php artisan key:generate
 - php artisan migrate
 - php artisan db:seed
